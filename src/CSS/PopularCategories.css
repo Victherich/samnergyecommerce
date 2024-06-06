@@ -1,0 +1,121 @@
+.PopularCategoriesWrap{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 50px 0px;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    gap:50px;
+    /* background-color: rgba(172, 255, 47, 0.3); */
+    /* background-color: white; */
+}
+
+.PopularCategoriesWrap h1{
+    color: green;
+    text-align: center;
+}
+
+
+.PopularCategories{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
+}
+
+.PopularCategory{
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: 350ms;
+
+    /* background-color: red; */
+    background-image: url("../Images/cat1.jpeg");
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    
+}
+
+.PopularCategory::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.PopularCategory:nth-child(2){
+    background-image:url("../Images/cat2.jpeg");
+}
+
+.PopularCategory:nth-child(3){
+    background-image:url("../Images/cat3.jpeg");
+}
+
+.PopularCategory:nth-child(4){
+    background-image:url("../Images/foodmartimg.jpeg");
+}
+
+.PopularCategory:nth-child(5){
+    background-image:url("../Images/cat4.jpeg");
+}
+
+.PopularCategory:hover{
+    transform: scale(1.02);
+}
+
+.PopularCategory p{
+    color:white;
+    font-size: 1.2rem;
+    z-index: 1;
+}
+
+@media screen and (max-width:884px) {
+    .PopularCategories img{
+        width: 150px;
+        height: 150px;
+    } 
+    .PopularCategories img{
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width:428px) {
+    .PopularCategory{
+        width: 180px;
+        height: 180px;
+    }   
+    .PopularCategoriesWrap h1{
+        font-size: 1.5rem;
+        padding: 0px 10px;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .PopularCategory{
+        width: 160px;
+        height: 160px;
+    }   
+}
+
+@media screen and (max-width:320px) {
+    .PopularCategory{
+        width: 150px;
+        height: 150px;
+    }   
+
+    .PopularCategories{
+        gap: 8px;
+    }
+}

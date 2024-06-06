@@ -1,0 +1,232 @@
+.HeaderWrap{
+    width:100%;
+    height:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: rgb(220, 252, 173); */
+    background-color: white;
+    /* background-color: red; */
+    font-family: Arial, Helvetica, sans-serif;
+    flex-direction: column;
+    position: fixed;
+    z-index: 9999;
+    top:0
+}
+
+.HeaderUp{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: auto;
+    padding: 15px 0px;
+}
+
+.HeaderUpLeft{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: auto;
+}
+
+.HeaderUpLeft h3{
+    /* font-style: italic; */
+    color: green;
+}
+
+.HeaderUpLeft img{
+    width: 100%;
+    height: 30px;
+}
+
+.HeaderUpMid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:500px;
+    height: auto;
+    border: 1px solid rgba(0, 128, 0, 0.5);
+    border-radius: 5px;
+}
+
+.HeaderUpRight{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 280px;
+    color: green;
+}
+
+.HeaderUpRight1{
+    display: flex;
+    width: 26%;
+    justify-content: space-between;
+}
+
+.HeaderUpRight1 p{
+    cursor: pointer;
+}
+
+.HeaderUpRight1 p:hover{
+    text-decoration: underline;
+}
+
+.HeaderUpMid input{
+    width: 90%;
+    height: auto;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 4px 0px 0px 4px;
+}
+
+.SearchIconWrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgba(0, 128, 0, 0.5);
+    padding: 10px;
+    color:white;
+    cursor: pointer;
+    width: 11%;
+    border-radius: 0px 4px 4px 0px;
+    
+}
+
+.HeaderDown{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    background-color: green;
+}
+
+.Menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 0px 10px;
+    height: 100%;
+    cursor: pointer;
+    
+}
+
+.Menu:hover{
+    background-color: rgba(172, 255, 47, 0.363);
+}
+
+.MenuActive{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    color: green;
+    text-align: center;
+    text-decoration: none;
+    padding: 0px 10px;
+    height: 100%;
+    cursor: pointer;
+    background-color: white;
+}
+.HeaderDown2, .HeaderDown2A{
+    display: none;
+}
+
+@media screen and (max-width:884px) {
+    .HeaderUpMid{
+        width: 280px;
+    }   
+    .HeaderDown{
+        height: auto;
+        justify-content: center;
+        padding: 10px 0px;
+    }
+    .HeaderDown{
+        display: none;
+    }
+    .HeaderDown2A{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0px;
+        background-color: green;
+        width: 100%;
+        gap: 10px;
+        color: white;
+    }
+
+    .HeaderDown2A p{
+        cursor: pointer;
+    }
+
+    .HeaderDown2{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 50%;
+        /* height: 40px; */
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 20px 0px;
+        background-color: green;
+        position: absolute;
+        top: 130px;
+
+    }
+    .Menu, .MenuActive{
+        padding: 13px;
+        width: 100%;
+    }
+    .HeaderWrap{
+        position:fixed;
+    }
+    .MenuActive{
+        background-color: rgba(172, 255, 47, 0.363);
+        color: white;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .HeaderUpMid{
+        width: 250px;
+    }   
+ 
+}
+
+@media screen and (max-width:428px) {
+    .HeaderUp{
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .HeaderDown{
+        display: none;
+    }
+
+    .HeaderDown2{
+        top: 183px;
+        gap: 0px;
+        width: 60%;
+    }
+    .HeaderWrap{
+        position: relative;
+    }
+ 
+}
+
+@media screen and (max-width:320px) {
+    .HeaderDown2{
+        padding:0px 0px;
+        overflow-y: scroll;
+    }
+}

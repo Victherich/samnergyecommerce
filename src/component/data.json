@@ -1,0 +1,289 @@
+
+
+[
+    {
+        "title": "Organic Apples",
+        "description": "Fresh and organic apples, straight from the farm.",
+        "price": 5000,
+        "category": "Food mart",
+        "images": [
+            "./images/p1a (1).jpeg"
+        ]
+    },
+    {
+        "title": "Stainless Steel Knife Set",
+        "description": "High-quality stainless steel knife set, perfect for any kitchen.",
+        "price": 6000,
+        "category": "Kitchen utensils",
+        "images": [
+            "https://example.com/images/knife_set1.jpg",
+            "https://example.com/images/knife_set2.jpg",
+            "https://example.com/images/knife_set3.jpg",
+            "https://example.com/images/knife_set4.jpg"
+        ]
+    },
+    {
+        "title": "Classic White T-Shirt",
+        "description": "Comfortable and stylish classic white t-shirt.",
+        "price": 7000,
+        "category": "Fashion(samtoclassics)",
+        "images": [
+            "https://example.com/images/white_tshirt1.jpg",
+            "https://example.com/images/white_tshirt2.jpg",
+            "https://example.com/images/white_tshirt3.jpg",
+            "https://example.com/images/white_tshirt4.jpg"
+        ]
+    },
+    {
+        "title": "Propane Gas Cylinder",
+        "description": "20 lb propane gas cylinder, ideal for grilling.",
+        "price": 8000,
+        "category": "Cooking gas 'n accessories",
+        "images": [
+            "https://example.com/images/propane_cylinder1.jpg",
+            "https://example.com/images/propane_cylinder2.jpg",
+            "https://example.com/images/propane_cylinder3.jpg",
+            "https://example.com/images/propane_cylinder4.jpg"
+        ]
+    },
+    {
+        "title": "Organic Green Tea",
+        "description": "Refreshing organic green tea, great for a healthy lifestyle.",
+        "price": 9000,
+        "category": "Belly Inn",
+        "images": [
+            "https://example.com/images/green_tea1.jpg",
+            "https://example.com/images/green_tea2.jpg",
+            "https://example.com/images/green_tea3.jpg",
+            "https://example.com/images/green_tea4.jpg"
+        ]
+    },
+    {
+        "title": "Vitamin C Supplements",
+        "description": "High potency Vitamin C supplements for daily health.",
+        "price": 10000,
+        "category": "Health care(healthy stop)",
+        "images": [
+            "https://example.com/images/vitamin_c1.jpg",
+            "https://example.com/images/vitamin_c2.jpg",
+            "https://example.com/images/vitamin_c3.jpg",
+            "https://example.com/images/vitamin_c4.jpg"
+        ]
+    },
+    {
+        "title": "Whole Wheat Bread",
+        "description": "Nutritious and delicious whole wheat bread.",
+        "price": 11000,
+        "category": "Food mart",
+        "images": [
+            "https://example.com/images/whole_wheat_bread1.jpg",
+            "https://example.com/images/whole_wheat_bread2.jpg",
+            "https://example.com/images/whole_wheat_bread3.jpg",
+            "https://example.com/images/whole_wheat_bread4.jpg"
+        ]
+    },
+    {
+        "title": "Non-stick Frying Pan",
+        "description": "Durable non-stick frying pan for easy cooking.",
+        "price": 12000,
+        "category": "Kitchen utensils",
+        "images": [
+            "https://example.com/images/frying_pan1.jpg",
+            "https://example.com/images/frying_pan2.jpg",
+            "https://example.com/images/frying_pan3.jpg",
+            "https://example.com/images/frying_pan4.jpg"
+        ]
+    },
+    {
+        "title": "Denim Jeans",
+        "description": "Stylish and comfortable denim jeans.",
+        "price": 13000,
+        "category": "Fashion(samtoclassics)",
+        "images": [
+            "https://example.com/images/denim_jeans1.jpg",
+            "https://example.com/images/denim_jeans2.jpg",
+            "https://example.com/images/denim_jeans3.jpg",
+            "https://example.com/images/denim_jeans4.jpg"
+        ]
+    },
+    {
+        "title": "Butane Gas Canisters",
+        "description": "Pack of 4 butane gas canisters for portable stoves.",
+        "price": 14000,
+        "category": "Cooking gas 'n accessories",
+        "images": [
+            "https://example.com/images/butane_canisters1.jpg",
+            "https://example.com/images/butane_canisters2.jpg",
+            "https://example.com/images/butane_canisters3.jpg",
+            "https://example.com/images/butane_canisters4.jpg"
+        ]
+    },
+    {
+        "title": "Organic Honey",
+        "description": "Pure and organic honey, perfect for sweetening.",
+        "price": 15000,
+        "category": "Belly Inn",
+        "images": [
+            "https://example.com/images/organic_honey1.jpg",
+            "https://example.com/images/organic_honey2.jpg",
+            "https://example.com/images/organic_honey3.jpg",
+            "https://example.com/images/organic_honey4.jpg"
+        ]
+    },
+    {
+        "title": "Herbal Multivitamins",
+        "description": "Daily herbal multivitamins for overall wellness.",
+        "price": 16000,
+        "category": "Health care(healthy stop)",
+        "images": [
+            "https://example.com/images/herbal_multivitamins1.jpg",
+            "https://example.com/images/herbal_multivitamins2.jpg",
+            "https://example.com/images/herbal_multivitamins3.jpg",
+            "https://example.com/images/herbal_multivitamins4.jpg"
+        ]
+    },
+    {
+        "title": "Fresh Bananas",
+        "description": "Ripe and sweet bananas, perfect for snacks.",
+        "price": 17000,
+        "category": "Food mart",
+        "images": [
+            "https://example.com/images/fresh_bananas1.jpg",
+            "https://example.com/images/fresh_bananas2.jpg",
+            "https://example.com/images/fresh_bananas3.jpg",
+            "https://example.com/images/fresh_bananas4.jpg"
+        ]
+    },
+    {
+        "title": "Silicone Baking Mat",
+        "description": "Reusable silicone baking mat for non-stick baking.",
+        "price": 18000,
+        "category": "Kitchen utensils",
+        "images": [
+            "https://example.com/images/baking_mat1.jpg",
+            "https://example.com/images/baking_mat2.jpg",
+            "https://example.com/images/baking_mat3.jpg",
+            "https://example.com/images/baking_mat4.jpg"
+        ]
+    },
+    {
+        "title": "Leather Wallet",
+        "description": "Elegant leather wallet with multiple card slots.",
+        "price": 19000,
+        "category": "Fashion(samtoclassics)",
+        "images": [
+            "https://example.com/images/leather_wallet1.jpg",
+            "https://example.com/images/leather_wallet2.jpg",
+            "https://example.com/images/leather_wallet3.jpg",
+            "https://example.com/images/leather_wallet4.jpg"
+        ]
+    },
+    {
+        "title": "Gas Grill Regulator",
+        "description": "Gas grill regulator with hose for propane tanks.",
+        "price": 20000,
+        "category": "Cooking gas 'n accessories",
+        "images": [
+            "https://example.com/images/grill_regulator1.jpg",
+            "https://example.com/images/grill_regulator2.jpg",
+            "https://example.com/images/grill_regulator3.jpg",
+            "https://example.com/images/grill_regulator4.jpg"
+        ]
+    },
+    {
+        "title": "Organic Quinoa",
+        "description": "Healthy and organic quinoa, great for salads.",
+        "price": 21000,
+        "category": "Belly Inn",
+        "images": [
+            "https://example.com/images/organic_quinoa1.jpg",
+            "https://example.com/images/organic_quinoa2.jpg",
+            "https://example.com/images/organic_quinoa3.jpg",
+            "https://example.com/images/organic_quinoa4.jpg"
+        ]
+    },
+    {
+        "title": "Fish Oil Capsules",
+        "description": "Omega-3 fish oil capsules for heart health.",
+        "price": 22000,
+        "category": "Health care(healthy stop)",
+        "images": [
+            "https://example.com/images/fish_oil1.jpg",
+            "https://example.com/images/fish_oil2.jpg",
+            "https://example.com/images/fish_oil3.jpg",
+            "https://example.com/images/fish_oil4.jpg"
+        ]
+    },
+    {
+        "title": "Almond Milk",
+        "description": "Delicious and nutritious almond milk.",
+        "price": 23000,
+        "category": "Food mart",
+        "images": [
+            "https://example.com/images/almond_milk1.jpg",
+            "https://example.com/images/almond_milk2.jpg",
+            "https://example.com/images/almond_milk3.jpg",
+            "https://example.com/images/almond_milk4.jpg"
+        ]
+    },
+    {
+        "title": "Ceramic Cooking Pot",
+        "description": "High-quality ceramic cooking pot for even heating.",
+        "price": 24000,
+        "category": "Kitchen utensils",
+        "images": [
+            "https://example.com/images/cooking_pot1.jpg",
+            "https://example.com/images/cooking_pot2.jpg",
+            "https://example.com/images/cooking_pot3.jpg",
+            "https://example.com/images/cooking_pot4.jpg"
+        ]
+    },
+    {
+        "title": "Summer Dress",
+        "description": "Light and breezy summer dress for casual wear.",
+        "price": 25000,
+        "category": "Fashion(samtoclassics)",
+        "images": [
+            "https://example.com/images/summer_dress1.jpg",
+            "https://example.com/images/summer_dress2.jpg",
+            "https://example.com/images/summer_dress3.jpg",
+            "https://example.com/images/summer_dress4.jpg"
+        ]
+    },
+    {
+        "title": "Gas Stove Burner",
+        "description": "Portable gas stove burner for outdoor cooking.",
+        "price": 26000,
+        "category": "Cooking gas 'n accessories",
+        "images": [
+            "https://example.com/images/stove_burner1.jpg",
+            "https://example.com/images/stove_burner2.jpg",
+            "https://example.com/images/stove_burner3.jpg",
+            "https://example.com/images/stove_burner4.jpg"
+        ]
+    },
+    {
+        "title": "Organic Almonds",
+        "description": "Crunchy and healthy organic almonds.",
+        "price": 27000,
+        "category": "Belly Inn",
+        "images": [
+            "https://example.com/images/organic_almonds1.jpg",
+            "https://example.com/images/organic_almonds2.jpg",
+            "https://example.com/images/organic_almonds3.jpg",
+            "https://example.com/images/organic_almonds4.jpg"
+        ]
+    },
+    {
+        "title": "Calcium Tablets",
+        "description": "Calcium tablets for strong bones and teeth.",
+        "price": 28000,
+        "category": "Health care(healthy stop)",
+        "images": [
+            "https://example.com/images/calcium_tablets1.jpg",
+            "https://example.com/images/calcium_tablets2.jpg",
+            "https://example.com/images/calcium_tablets3.jpg",
+            "https://example.com/images/calcium_tablets4.jpg"
+        ]
+    }
+]
