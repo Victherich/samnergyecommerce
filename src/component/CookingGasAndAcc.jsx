@@ -84,7 +84,7 @@ const style1 ={
             <div className='FeaturedCollectionHeaderImgWrap' style={style1}><h1>COOKING GAS AND ACCESSORIES</h1></div>
             
             <div className='Collections'>
-                {Data.slice(0,18).map((d)=>(
+                {Data.slice(8,14).map((d)=>(
                     <Link to={'/productdetailpage'} className='ProductCard2' key={d.id} onClick={()=>handleDataDetail(d.id)}>
                     <div className='CardUp'>
                           <img src={d.image} alt="photo"/>

@@ -1,0 +1,96 @@
+.order-summary {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    padding-top: 150px;
+    padding-bottom: 100px;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .order-summary h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    
+  }
+  
+  .user-info, .cart-info, .total-info {
+    margin-bottom: 20px;
+  }
+
+  .user-info h3, .cart-info h3{
+    color: green;
+  }
+
+  .cart-info img{
+    width: 50px;
+    height: 50px;
+  }
+  
+  .user-info p, .cart-info p {
+    margin: 5px 0;
+  }
+  
+  .cart-info ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .cart-info ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .total-info p {
+    font-size: 1.1em;
+    margin: 5px 0;
+  }
+  
+  .order-summary button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .order-summary button:hover {
+    background-color: #218838;
+  }
+
+  .CheckBoxWrap{
+    display: flex;
+    /* width: 100%; */
+    /* justify-content: center; */
+    align-items: center;
+    gap:7px;
+    margin-bottom: 20px;
+  }
+
+  .CheckBoxWrap input{
+    cursor: pointer;
+  }
+  
+  @media (max-width: 600px) {
+    .order-summary {
+      padding: 10px;
+      padding-bottom: 50px;
+    }
+  
+    .total-info p {
+      font-size: 1em;
+    }
+  
+    .order-summary button {
+      font-size: 1em;
+      padding: 8px;
+    }
+  }
+  

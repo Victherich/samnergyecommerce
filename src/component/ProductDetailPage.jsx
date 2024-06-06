@@ -9,7 +9,7 @@ import { FaBackward } from 'react-icons/fa6';
 import { Context } from './Context';
 import p1 from "../Images/p1a__1_-removebg-preview.png"
 import p5 from "../Images/p3 (1).jpeg"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart ,addToWishlist} from '../Features/Slice';
 import Swal from 'sweetalert2';
 
@@ -17,7 +17,8 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch()
   const {loading,setLoading}=useContext(Context)
 
-    const {productDetail,setProductDetail,DataDetail}=useContext(Context)
+    const {DataDetail}=useContext(Context)
+    const ProductDetail=useSelector(state=>state.ProductDetail)
 
     
   const product = {
@@ -59,24 +60,31 @@ const ProductDetailPage = () => {
     <div className='ProductDetailWrap'>
         <div className="product-detail">
       <div className="image-gallery">
-        {imageSwitch===0&&<img src={DataDetail?.image} alt="Product" className="main-image" />}
-        {imageSwitch===1&&<img src={DataDetail?.image} alt="Product" className="main-image" />}
+        {imageSwitch===0&&<img src={ProductDetail?.image} alt="Product" className="main-image" />}
+        {imageSwitch===1&&<img src={ProductDetail?.image} alt="Product" className="main-image" />}
         {imageSwitch===2&&<img src={product.images[2]} alt="Product" className="main-image" />}
         {imageSwitch===3&&<img src={product.images[3]} alt="Product" className="main-image" />}
+        
         <div className="thumbnail-images">
           
-          <img src={DataDetail?.image} alt="Product" className={imageSwitch===0?"thumbnail-imageActive":"thumbnail-image"} onClick={()=>setImageSwitch(0)}/>
-          <img src={DataDetail?.image} alt="Product" className={imageSwitch===1?"thumbnail-imageActive":"thumbnail-image"} onClick={()=>setImageSwitch(1)}/>
+          <img src={ProductDetail?.image} alt="Product" className={imageSwitch===0?"thumbnail-imageActive":"thumbnail-image"} onClick={()=>setImageSwitch(0)}/>
+          <img src={ProductDetail?.image} alt="Product" className={imageSwitch===1?"thumbnail-imageActive":"thumbnail-image"} onClick={()=>setImageSwitch(1)}/>
           <img src={product.images[2]} alt="Product" className={imageSwitch===2?"thumbnail-imageActive":"thumbnail-image"} onClick={()=>setImageSwitch(2)}/>
           <img src={product.images[3]} alt="Product" className={imageSwitch===3?"thumbnail-imageActive":"thumbnail-image"} onClick={()=>setImageSwitch(3)}/>
         </div>
-        <FaHeart className="wishlist-icon" onClick={handleAddToWishlist}/>
+        
       </div>
       <div className="product-info">
-        <h1>{DataDetail.title}</h1>
-        <p>{DataDetail.description}</p>
-        <p className="amount">₦ {new Intl.NumberFormat().format(DataDetail.price * 1000)}</p>
+        <h1>{ProductDetail.title}</h1>
+        <span>{ProductDetail.description}</span>
+        <p className="amount">₦ {new Intl.NumberFormat().format(ProductDetail.price * 1000)}</p>
         <button className="buy-now" onClick={handleAddToCart}>Add to Cart</button>
+        <button className="buy-now" onClick={handleAddToWishlist} style={{backgroundColor:"white",
+        color:"green",
+        border:"1px solid green",
+        display:"flex",
+        justifyContent:"center",
+        gap:"10px"}}><FaHeart />Add to Wishlist</button>
     
         
       </div>

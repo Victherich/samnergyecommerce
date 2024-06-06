@@ -15,6 +15,8 @@ import ProductDetailPage from './component/ProductDetailPage';
 import ScrollToTop from './component/ScrollToTop';
 import CartPage from './component/CartPage';
 import WishList from "./component/WishList";
+import DeliveryDetailPage from './component/DeliveryDetailPage';
+import OrderSummaryPage from './component/OrderSummaryPage';
 
 const App = () => {
   return (
@@ -33,6 +35,8 @@ const App = () => {
           <Route path="/productdetailpage" element={<ProductDetailPage/>}/>
           <Route path="/cartpage" element={<CartPage/>}/>
           <Route path="/wishlist" element={<WishList/>}/>
+          <Route path="/deliverydetailpage" element={<DeliveryDetailPage/>}/>
+          <Route path="/ordersummarypage" element={<OrderSummaryPage/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>

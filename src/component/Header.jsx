@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 
 const Header = () => {
   const cart = useSelector(state=>state.cart)
+  const wishlist = useSelector(state=>state.wishlist)
   const navigate = useNavigate()
   const location = useLocation()
   const {loading,setLoading,searchInput,setSearchInput,handleSearch,navigateState,setNavigateState}=useContext(Context)
@@ -86,7 +87,7 @@ const getTotal = () => {
           <FaHome style={{cursor:"pointer"}}/><p>Home</p>
           </div>
           <div className='HeaderUpRight1' onClick={()=>{navigate("/wishlist");handleLoading()}}>
-          <FaHeart/><p>Wishlist</p>
+          <FaHeart/><p>Wishlist</p><p>({wishlist.length})</p>
           </div>
           <div className='HeaderUpRight1' onClick={()=>{navigate("/cartpage");handleLoading()}}>
           <FaCartArrowDown/><p>Cart</p><p>({getTotal()})</p>

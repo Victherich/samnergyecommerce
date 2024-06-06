@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../CSS/CartPage.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, updateQuantity } from '../Features/Slice';
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
+import { Context } from './Context';
 
 const CartPage = () => {
+  const {loading,setLoading}=useContext(Context)
+  const navigate=useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
 
@@ -17,13 +21,28 @@ const CartPage = () => {
     Swal.fire({icon:"success",text:"Item removed from cart",showConfirmButton:false,timer:2000})
   };
 
+  
+  const handleLoading=()=>{
+    const load = setTimeout(()=>{
+      setLoading(true)
+    },100)
+
+    const stopLoad = setTimeout(()=>{
+      setLoading(false)
+    },1000)
+  }
+
+
   const handleCheckout = () => {
-    alert('Proceeding to checkout');
+    handleLoading()
+    navigate("/deliverydetailpage")
   };
 
   const getTotal = () => {
     return cart.reduce((total, item) => total + item.price * 1000 * item.qty, 0).toFixed(2);
   };
+
+
 
   return (
     <div className="cart">

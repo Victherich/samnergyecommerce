@@ -18,6 +18,9 @@ import p15 from "../Images/p4 (2).png";
 import p16 from "../Images/p4 (3).png";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { productDetailAssign } from '../Features/Slice';
 
 
 export const Context = createContext()
@@ -26,7 +29,7 @@ const ContextProvider = ({children}) => {
   // const navigate =useNavigate()
     const [loading,setLoading]=useState(false)
     const [searchResult, setSearchResult]=useState([])
-
+    const dispatch = useDispatch()
     const allData = [
       {
           id: 1,
@@ -94,7 +97,9 @@ const handleDataDetail = async(id)=>{
 try{
   const response = await axios.get(`https://fakestoreapi.com/products/${id}`) 
   console.log(response)
-  setDataDetail(response.data)
+  // setDataDetail(response.data)
+  dispatch(productDetailAssign(response.data))
+
 }catch(error){
   console.error(error)
 }finally{

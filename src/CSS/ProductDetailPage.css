@@ -29,12 +29,13 @@
     align-items: center;
     margin-right: 20px;
     position: relative;
+    gap: 10px;
   }
   
   .main-image {
-    width: 100%;
+    width: 70%;
     max-width: 600px;
-    height: auto;
+    height: 350px;
     margin-bottom: 10px;
   }
   
@@ -66,19 +67,19 @@
   }
   
   .product-info h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     margin-bottom: 10px;
     color: green;
   }
   
-  .product-info p {
-    margin-bottom: 10px;
-    /* font-size: 0.9rem; */
+  .product-info span {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
   }
   
   .amount {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: 600;
     margin-bottom: 20px;
     color: green;
   }

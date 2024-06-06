@@ -4,7 +4,17 @@ const MySlice = createSlice({
   name: "user",
   initialState: {
     cart: [],
-    wishlist: []
+    wishlist: [],
+    ProductDetail:{},
+    DeliveryDetail:{
+      fullName: '',
+      phone: '',
+      confirmPhone: '',
+      email: '',
+      address: '',
+      state: '',
+      city: '',
+    }
   },
   reducers: {
     addToCart: (state, { payload }) => {
@@ -39,8 +49,16 @@ const MySlice = createSlice({
     removeFromWishlist: (state, { payload }) => {
       state.wishlist = state.wishlist.filter((e) => e.id !== payload);
     },
+
+    productDetailAssign:(state,{payload})=>{
+      state.ProductDetail=payload
+    },
+
+    updateField: (state, action) => {
+      state.DeliveryDetail[action.payload.field] = action.payload.value;
+    },
   }
 });
 
-export const { addToCart, removeFromCart, updateQuantity,addToWishlist,removeFromWishlist } = MySlice.actions;
+export const { addToCart, removeFromCart, updateQuantity,addToWishlist,removeFromWishlist,productDetailAssign,updateField } = MySlice.actions;
 export default MySlice.reducer;
