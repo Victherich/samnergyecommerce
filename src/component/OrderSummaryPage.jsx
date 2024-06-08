@@ -8,6 +8,9 @@ import { clearCart, handleUserAllOrder } from '../Features/Slice';
 // import PaystackButton from 'react-paystack';
 import PaystackPop from "@paystack/inline-js"
 import { useNavigate } from 'react-router-dom';
+import emailjs from 'emailjs-com'
+import axios from 'axios';
+
 
 
 
@@ -88,12 +91,24 @@ const OrderSummaryPage = () => {
   const firstname=user.firstName
   const lastname= user.lastName
 
-  
+  const deliveryCharge = new Intl.NumberFormat().format(deliveryFees[user.state]?.[user.city] || 0)
 
   const handleOrderNow2 = async (reference) => {
     setLoading(true)
+
+    const getCurrentDateTime = () => {
+      const now = new Date();
+      // Calculate the timezone offset in milliseconds
+      const offset = now.getTimezoneOffset() * 60000;
+      // Adjust the time to the local time
+      const localTime = new Date(now.getTime() - offset);
+      // Convert to a readable format
+      return localTime.toISOString().slice(0, 19).replace("T", " ");
+    };
     
     const orderSummary = {
+      date:getCurrentDateTime(),
+      deliveryCharge:deliveryCharge,
       transactionRef:reference,
     orderRef:generateOrderRef(),
       firstName: user.firstName,
@@ -106,75 +121,97 @@ const OrderSummaryPage = () => {
       cartItems: cart.map((item) => `${item.title} - ${item.qty} x ₦${new Intl.NumberFormat().format(item.price * 1000)}`),
       total: `₦ ${new Intl.NumberFormat().format(calculateTotal())}`
     };
-dispatch(handleUserAllOrder(orderSummary))
+// dispatch(handleUserAllOrder(orderSummary))
 // setUserAllOrders([...userAllOrders,{orderSummary}])
 
 console.log(orderSummary)
-    try {
-      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-        to_name: user.fullName,
-        to_email: user.email,
-        order_summary: JSON.stringify(orderSummary, null, 2),
-      }, 'YOUR_USER_ID');
-
-      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-        to_name: 'Seller',
-        to_email: 'seller@example.com',
-        order_summary: JSON.stringify(orderSummary, null, 2),
-      }, 'YOUR_USER_ID');
-
-      dispatch(clearCart());
-      Swal.fire({icon:"success",text:"Your order has been placed successfully, Please check your email for details"})
-    } catch (error) {
-        // Swal.fire({icon:"error",text:"'Failed to place order. Please try again.",showConfirmButton:false,timer:2000})
+try {
+  const response = await axios.post('http://localhost:3000/send-order-summary', {
+    buyerEmail: user.email,
+    sellerEmail: 'digitalpremiumtech@gmail.com',
+    orderSummary: JSON.stringify(orderSummary, null, 2)
     
-    }finally{
+  });
+
+  if (response.status === 200) {
+    Swal.fire({ icon: "success", text: "Order confirmed, Please check your email for details" });
+    dispatch(handleUserAllOrder(orderSummary))
+    dispatch(clearCart());
+    navigate("/userdashboard")
+    setDashContent(1)
+  } else {
+    Swal.fire({ icon: "error", text: "Failed to send order summary." });
+  }
+} catch (error) {
+  Swal.fire({ icon: "error", text: "An error occurred while sending the order summary." });
+}finally{
         setLoading(false)
     }
   };
 
-  const handleOrderNow3 = async (reference) => {
+
+  //handling payment on deliery order
+  const handleOrderNow3 = async () => {
     setLoading(true)
-    alert("payment on deliery")
+    const loadingAlert = Swal.fire({
+            title: "Loading",
+            text: "Please wait...",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false
+          });
+        
+          Swal.showLoading();
+
+    const getCurrentDateTime = () => {
+      const now = new Date();
+      // Calculate the timezone offset in milliseconds
+      const offset = now.getTimezoneOffset() * 60000;
+      // Adjust the time to the local time
+      const localTime = new Date(now.getTime() - offset);
+      // Convert to a readable format
+      return localTime.toISOString().slice(0, 19).replace("T", " ");
+    };
+    
+
+    const orderSummary = {
+      date: getCurrentDateTime(),
+      transactionRef:"Payment on delivery",
+    orderRef:generateOrderRef(),
+    deliveryCharge:deliveryCharge,
+      firstName: user.firstName,
+      lastName: user.lastName, 
+      phone: user.phone,
+      email: user.email,
+      address: user.address,
+      state: user.state,
+      city: user.city,
+      cartItems: cart.map((item) => `${item.title} - ${item.qty} x ₦${new Intl.NumberFormat().format(item.price * 1000)}`),
+      total: `₦ ${new Intl.NumberFormat().format(calculateTotal())}`
+    };
 
     try {
-      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-        to_name: user.fullName,
-        to_email: user.email,
-        order_summary: JSON.stringify(orderSummary, null, 2),
-      }, 'YOUR_USER_ID');
+      const response = await axios.post('http://localhost:3000/send-order-summary', {
+        buyerEmail: user.email,
+        sellerEmail: 'digitalpremiumtech@gmail.com',
+        orderSummary: JSON.stringify(orderSummary, null, 2)
+        
+      });
 
-      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-        to_name: 'Seller',
-        to_email: 'seller@example.com',
-        order_summary: JSON.stringify(orderSummary, null, 2),
-      }, 'YOUR_USER_ID');
-
-
-      const orderSummary = {
-        transactionRef:reference,
-      orderRef:generateOrderRef(),
-        firstName: user.firstName,
-        lastName: user.lastName, 
-        phone: user.phone,
-        email: user.email,
-        address: user.address,
-        state: user.state,
-        city: user.city,
-        cartItems: cart.map((item) => `${item.title} - ${item.qty} x ₦${new Intl.NumberFormat().format(item.price * 1000)}`),
-        total: `₦ ${new Intl.NumberFormat().format(calculateTotal())}`
-      };
-  dispatch(handleUserAllOrder(orderSummary))
-  // setUserAllOrders([...userAllOrders,{orderSummary}])
-  
-  console.log(orderSummary)
-      dispatch(clearCart());
-      Swal.fire({icon:"success",text:"Your order has been placed successfully, Please check your email for details"})
+      if (response.status === 200) {
+        Swal.fire({ icon: "success", text: "Order confirmed, Please check your email for details" });
+        dispatch(handleUserAllOrder(orderSummary))
+        dispatch(clearCart());
+        navigate("/userdashboard")
+        setDashContent(1)
+      } else {
+        Swal.fire({ icon: "error", text: "Failed to send order summary." });
+      }
     } catch (error) {
-        // Swal.fire({icon:"error",text:"'Failed to place order. Please try again.",showConfirmButton:false,timer:2000})
-    
-    }finally{
+      Swal.fire({ icon: "error", text: "An error occurred while sending the order summary." });
+    } finally{
         setLoading(false)
+        loadingAlert.close();
     }
   };
 
@@ -217,10 +254,10 @@ console.log(orderSummary)
       lastname: lastname,
       onSuccess: (transaction) => {
         // handle successful payment
-        dispatch(clearCart());
-        Swal.fire({ icon: "success", text: "Payment successful! Order placed.", showConfirmButton: true });
-        navigate("/userdashboard")
-        setDashContent(1)
+        // dispatch(clearCart());
+        Swal.fire({ icon: "success", text: "Payment successful!", showConfirmButton: true });
+        // navigate("/userdashboard")
+        // setDashContent(1)
         handleOrderNow2(transaction.reference)
         
       },

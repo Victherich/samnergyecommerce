@@ -153,3 +153,7 @@ export default ContextProvider
 
 
 //https://chatgpt.com/c/c7a8b537-03a7-40e7-9d58-4619cecb84bd
+
+//node mailer pw
+//  dxik rokt ayod qkri
+//node server.js

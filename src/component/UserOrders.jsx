@@ -49,10 +49,11 @@ const UserOrders = () => {
         <div key={order.orderRef} className="order">
           <div className="order-header">
           <span><strong>Transaction Reference:</strong> {order.transactionRef}</span>
-            <span><strong>Order Reference:</strong> {order.orderRef}</span>
+            <span><strong>Order Reference:</strong> {order.orderRef}</span><br/>
             <span><strong>Date:</strong> {order.date}</span>
             <span><strong>Total:</strong> {order.total}</span>
-            <span><strong>Status:</strong> {order.status}</span>
+
+            <span><strong>Delivery Fee:</strong>₦ {order.deliveryCharge}</span>
           </div>
           <div className="order-details">
             <div><strong>First Name:</strong> {order.firstName}</div>
