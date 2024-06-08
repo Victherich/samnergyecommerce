@@ -2,6 +2,14 @@ import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import '../CSS/OrderSummaryPage.css';
 import { Context } from './Context';
+import Swal from "sweetalert2"
+import { useDispatch } from 'react-redux';
+import { clearCart, handleUserAllOrder } from '../Features/Slice';
+// import PaystackButton from 'react-paystack';
+import PaystackPop from "@paystack/inline-js"
+import { useNavigate } from 'react-router-dom';
+
+
 
 const deliveryFees = {
     Abia: { Umuahia: 3000, Aba: 3000, Ohafia: 3000, Arochukwu: 3000 },
@@ -43,13 +51,15 @@ const deliveryFees = {
     FCT: { Abuja: 3000, Gwagwalada: 3000, Kuje: 3000, Bwari: 3000 }
   };
   
-  console.log(deliveryFees);
+  // console.log(deliveryFees);
     
 
 const OrderSummaryPage = () => {
+  const navigate = useNavigate()
+    const dispatch = useDispatch()
   const user = useSelector((state) => state.DeliveryDetail);
   const cart = useSelector((state) => state.cart);
-  const {loading,setLoading}=useContext(Context)
+  const {loading,setLoading,dashContent,setDashContent,userAllOrders,setUserAllOrders}=useContext(Context)
 
   const calculateTotal = () => {
     let total = cart.reduce((sum, item) => sum + item.price * 1000 * item.qty, 0);
@@ -68,17 +78,163 @@ const OrderSummaryPage = () => {
     },1000)
   }
 
-  const [isChecked,setIsChecked]=useState(false)
+  const generateOrderRef = () => {
+    return 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+  };
 
-  const handleOrderNow = ()=>{
-    if(isChecked){
-        handleLoading()
-        alert("payment on deliery")
-    }else{
-        handleLoading()
-        alert("pay now on paystack")
+  const [isChecked,setIsChecked]=useState(false)
+  const email = user.email;
+  const amount= calculateTotal();
+  const firstname=user.firstName
+  const lastname= user.lastName
+
+  
+
+  const handleOrderNow2 = async (reference) => {
+    setLoading(true)
+    
+    const orderSummary = {
+      transactionRef:reference,
+    orderRef:generateOrderRef(),
+      firstName: user.firstName,
+      lastName: user.lastName, 
+      phone: user.phone,
+      email: user.email,
+      address: user.address,
+      state: user.state,
+      city: user.city,
+      cartItems: cart.map((item) => `${item.title} - ${item.qty} x ₦${new Intl.NumberFormat().format(item.price * 1000)}`),
+      total: `₦ ${new Intl.NumberFormat().format(calculateTotal())}`
+    };
+dispatch(handleUserAllOrder(orderSummary))
+// setUserAllOrders([...userAllOrders,{orderSummary}])
+
+console.log(orderSummary)
+    try {
+      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+        to_name: user.fullName,
+        to_email: user.email,
+        order_summary: JSON.stringify(orderSummary, null, 2),
+      }, 'YOUR_USER_ID');
+
+      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+        to_name: 'Seller',
+        to_email: 'seller@example.com',
+        order_summary: JSON.stringify(orderSummary, null, 2),
+      }, 'YOUR_USER_ID');
+
+      dispatch(clearCart());
+      Swal.fire({icon:"success",text:"Your order has been placed successfully, Please check your email for details"})
+    } catch (error) {
+        // Swal.fire({icon:"error",text:"'Failed to place order. Please try again.",showConfirmButton:false,timer:2000})
+    
+    }finally{
+        setLoading(false)
     }
-  }
+  };
+
+  const handleOrderNow3 = async (reference) => {
+    setLoading(true)
+    alert("payment on deliery")
+
+    try {
+      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+        to_name: user.fullName,
+        to_email: user.email,
+        order_summary: JSON.stringify(orderSummary, null, 2),
+      }, 'YOUR_USER_ID');
+
+      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+        to_name: 'Seller',
+        to_email: 'seller@example.com',
+        order_summary: JSON.stringify(orderSummary, null, 2),
+      }, 'YOUR_USER_ID');
+
+
+      const orderSummary = {
+        transactionRef:reference,
+      orderRef:generateOrderRef(),
+        firstName: user.firstName,
+        lastName: user.lastName, 
+        phone: user.phone,
+        email: user.email,
+        address: user.address,
+        state: user.state,
+        city: user.city,
+        cartItems: cart.map((item) => `${item.title} - ${item.qty} x ₦${new Intl.NumberFormat().format(item.price * 1000)}`),
+        total: `₦ ${new Intl.NumberFormat().format(calculateTotal())}`
+      };
+  dispatch(handleUserAllOrder(orderSummary))
+  // setUserAllOrders([...userAllOrders,{orderSummary}])
+  
+  console.log(orderSummary)
+      dispatch(clearCart());
+      Swal.fire({icon:"success",text:"Your order has been placed successfully, Please check your email for details"})
+    } catch (error) {
+        // Swal.fire({icon:"error",text:"'Failed to place order. Please try again.",showConfirmButton:false,timer:2000})
+    
+    }finally{
+        setLoading(false)
+    }
+  };
+
+
+
+
+
+
+
+  // const handleOrderNow = ()=>{
+  //   if(isChecked){
+  //       handleLoading()
+  //       // handleOrderNow2()
+  //       alert("payment on delivery")
+        
+  //   }else{
+  //       handleLoading()
+  //       alert("pay now on paystack")
+  //   }
+  // }
+
+  const handleOrderNow = () => {
+    handleLoading();
+    if (isChecked) {
+      handleOrderNow3()
+    } else {
+      payWithPaystack();
+    }
+  };
+
+ 
+
+  const payWithPaystack = () => {
+    const paystack = new PaystackPop();
+    paystack.newTransaction({
+      key: "pk_test_60e1f53bba7c80b60029bf611a26a66a9a22d4e4",
+      amount: amount * 100, // amount in kobo
+      email: email,
+      firstname: firstname,
+      lastname: lastname,
+      onSuccess: (transaction) => {
+        // handle successful payment
+        dispatch(clearCart());
+        Swal.fire({ icon: "success", text: "Payment successful! Order placed.", showConfirmButton: true });
+        navigate("/userdashboard")
+        setDashContent(1)
+        handleOrderNow2(transaction.reference)
+        
+      },
+      onCancel: () => {
+        // handle payment cancellation
+        Swal.fire({ icon: "error", text: "Payment cancelled.", showConfirmButton: true });
+      },
+      onError: (error) => {
+        // handle payment errors
+        Swal.fire({ icon: "error", text: `Payment failed: ${error.message}`, showConfirmButton: true });
+      }
+    });
+  };
+
 
 
   return (
@@ -86,7 +242,8 @@ const OrderSummaryPage = () => {
       <h2>Order Summary</h2>
       <div className="user-info">
         <h3>Delivery Information</h3>
-        <p><strong>Name:</strong> {user.fullName}</p>
+        <p><strong>First Name:</strong> {user.firstName}</p>
+        <p><strong>Last Name:</strong> {user.lastName}</p>
         <p><strong>Phone:</strong> {user.phone}</p>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Address:</strong> {user.address}</p>
@@ -111,8 +268,33 @@ const OrderSummaryPage = () => {
         <p><strong>Grand Total:</strong> ₦{new Intl.NumberFormat().format(calculateTotal())}</p>
       </div>
       <div className='CheckBoxWrap'><input type="checkbox" isChecked={isChecked} onClick={()=>setIsChecked(!isChecked)}/> <p>Payment on delivery</p></div>      
-<button onClick={handleOrderNow}>Order Now</button>
+{isChecked?<button onClick={handleOrderNow}>Order Now</button>:
+<button type="button" onClick={payWithPaystack}>Pay Now</button>}
+
+            {/* call the paystack form here  */}
+            {/* <form id="paymentForm">
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input type="email" id="email-address" required value={email}  />
+        </div>
+        <div className="form-group">
+          <label htmlFor="amount">Amount</label>
+          <input type="tel" id="amount" required value={amount}  />
+        </div>
+        <div className="form-group">
+          <label htmlFor="first-name">First Name</label>
+          <input type="text" id="first-name" value={firstname} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="last-name">Last Name</label>
+          <input type="text" id="last-name" value={lastname} />
+        </div>
+        <div className="form-submit">
+          
+        </div>
+      </form> */}
     </div>
+
   );
 };
 

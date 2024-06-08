@@ -259,6 +259,12 @@
     color: green;
 }
 
+@media screen and (max-width:884px) {
+    .Collections{
+        padding: 0px 0px; 
+    }
+}
+
 
 @media screen and (max-width:428px) {
     .ProductCard2{

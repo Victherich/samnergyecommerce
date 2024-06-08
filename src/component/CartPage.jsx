@@ -5,6 +5,7 @@ import { removeFromCart, updateQuantity } from '../Features/Slice';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
 import { Context } from './Context';
+import { FaUser } from 'react-icons/fa';
 
 const CartPage = () => {
   const {loading,setLoading}=useContext(Context)
@@ -46,9 +47,13 @@ const CartPage = () => {
 
   return (
     <div className="cart">
+      <div className='HeaderUpRight1 BackToDashLink' onClick={()=>{navigate("/userdashboard");handleLoading()}}>
+          <FaUser/><p>Dashboard</p>
+          </div>
       <h2>Your Shopping Cart</h2>
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p>Your cart is empty. <span>Start Shopping</span></p>
+        
       ) : (
         <div>
           {cart?.map(item => (

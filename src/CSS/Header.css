@@ -14,6 +14,10 @@
     top:0
 }
 
+.HeaderWrapDisappear{
+    display: none;
+}
+
 .HeaderUp{
     display: flex;
     justify-content: space-between;
@@ -27,13 +31,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
+    width: 250px;
     height: auto;
+    /* background-color: red; */
 }
 
-.HeaderUpLeft h3{
+.HeaderUpLeft h2{
     /* font-style: italic; */
     color: green;
+    font-weight: bolder;
+    font-size: 1.5rem;
 }
 
 .HeaderUpLeft img{
@@ -55,14 +62,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 280px;
+    width: 350px;
     color: green;
 }
 
 .HeaderUpRight1{
     display: flex;
-    width: 26%;
-    justify-content: space-between;
+    width: 35%;
+    justify-content: center;
+    gap: 3px;
 }
 
 .HeaderUpRight1 p{
@@ -70,6 +78,21 @@
 }
 
 .HeaderUpRight1 p:hover{
+    text-decoration: underline;
+}
+
+.HeaderUpRight2{
+    display: flex;
+    width: 40%;
+    justify-content: center;
+    gap: 3px;
+}
+
+.HeaderUpRight2 p{
+    cursor: pointer;
+}
+
+.HeaderUpRight2 p:hover{
     text-decoration: underline;
 }
 
@@ -86,7 +109,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:rgba(0, 128, 0, 0.5);
+    background-color:rgba(0, 128, 0, 0.6);
     padding: 10px;
     color:white;
     cursor: pointer;

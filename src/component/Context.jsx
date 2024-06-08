@@ -133,14 +133,15 @@ const [searchInput,setSearchInput]=useState("")
     setNavigateState(true);
   }
 };
-console.log(searchResult)
+// console.log(searchResult)
   
-
-
+const [dashContent,setDashContent]=useState(0)
+const [userAllOrders,setUserAllOrders]=useState([])
   return (
     <Context.Provider value={{loading,setLoading,searchInput,setSearchInput,searchResult, 
     setSearchResult,
-    handleSearch,navigateState,setNavigateState,productDetail,setProductDetail,Data,DataDetail,handleDataDetail}}>
+    handleSearch,navigateState,setNavigateState,productDetail,setProductDetail,Data,DataDetail,
+    handleDataDetail,dashContent,setDashContent,userAllOrders,setUserAllOrders}}>
       {children}
     </Context.Provider>
   )

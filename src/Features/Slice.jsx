@@ -4,18 +4,29 @@ const MySlice = createSlice({
   name: "user",
   initialState: {
     cart: [],
+
     wishlist: [],
+
     ProductDetail:{},
+
     DeliveryDetail:{
-      fullName: '',
+      firstName: '',
+      lastName:'',
       phone: '',
       confirmPhone: '',
       email: '',
       address: '',
       state: '',
       city: '',
-    }
+    },
+
+  userInfo:null,
+  userId:null,
+  userAllOrder:[],
+
   },
+  
+
   reducers: {
     addToCart: (state, { payload }) => {
         const itemIndex = state.cart.findIndex(item => item.id === payload.id);
@@ -57,8 +68,25 @@ const MySlice = createSlice({
     updateField: (state, action) => {
       state.DeliveryDetail[action.payload.field] = action.payload.value;
     },
+    clearCart: (state) => {
+      state.cart = [];
+    },
+    userLogin: (state, { payload }) => {
+      state.userInfo = payload.userInfo;
+      state.userId = payload.userId;
+      
+  },
+  userLogout:(state)=>{
+    state.userInfo = null;
+    state.userId = null;
+  },
+
+  handleUserAllOrder:(state,{payload})=>{
+    state.userAllOrder = [{...payload},...state.userAllOrder]
+  }
   }
 });
 
-export const { addToCart, removeFromCart, updateQuantity,addToWishlist,removeFromWishlist,productDetailAssign,updateField } = MySlice.actions;
+export const { addToCart, removeFromCart, updateQuantity,addToWishlist,
+  removeFromWishlist,productDetailAssign,updateField,clearCart,userLogin,userLogout,handleUserAllOrder } = MySlice.actions;
 export default MySlice.reducer;

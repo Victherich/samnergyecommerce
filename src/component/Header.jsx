@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState,useEffect } from 'react';
 import '../CSS/Header.css'
-import { FaCartArrowDown, FaChevronCircleDown, FaHeart, FaHome, FaSearch } from 'react-icons/fa';
+import { FaCartArrowDown, FaChevronCircleDown, FaDashcube, FaHeart, FaHome, FaSearch, FaUser } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { Context } from './Context';
@@ -10,12 +10,13 @@ import { useSelector } from 'react-redux';
 const Header = () => {
   const cart = useSelector(state=>state.cart)
   const wishlist = useSelector(state=>state.wishlist)
+  const userId = useSelector(state=>state.userId)
   const navigate = useNavigate()
   const location = useLocation()
   const {loading,setLoading,searchInput,setSearchInput,handleSearch,navigateState,setNavigateState}=useContext(Context)
   const [mobileMenuSwitch,setMobileMenuSwitch]=useState(false)
   
-
+console.log(userId)
     //Ref for clickOutside functionality
 const menuRef = useRef()
 
@@ -68,12 +69,14 @@ const getTotal = () => {
   return cart.reduce((total, item) =>total + item.qty, 0);
 };
 
+
+
+
   return (
-    <div className='HeaderWrap'>
+    <div className={location.pathname==="/userlogin"||location.pathname==="/usersignup"?"HeaderWrapDisappear":'HeaderWrap'}>
       <div className='HeaderUp'>
         <div className='HeaderUpLeft'>
-            {/* <img src="" alt="Logo"/> */}
-            <h3>SAMNERGY</h3>
+            <h2>HOT SALES NG</h2>
         </div>
         <div className='HeaderUpMid'>
             <input type="text" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)} placeholder='Search for products, brands and categories'/>
@@ -86,9 +89,14 @@ const getTotal = () => {
         <div className='HeaderUpRight1' onClick={handleNavigate}>
           <FaHome style={{cursor:"pointer"}}/><p>Home</p>
           </div>
-          <div className='HeaderUpRight1' onClick={()=>{navigate("/wishlist");handleLoading()}}>
-          <FaHeart/><p>Wishlist</p><p>({wishlist.length})</p>
-          </div>
+          {userId?<div className='HeaderUpRight2' onClick={()=>{navigate("/userdashboard");handleLoading()}}>
+          <FaUser/><p>Dashboard</p>
+          </div>:
+
+          <div className='HeaderUpRight2' onClick={()=>{navigate("/userdashboard");handleLoading()}}>
+          <FaUser/><p>Sign up / Login</p>
+          </div>}
+          
           <div className='HeaderUpRight1' onClick={()=>{navigate("/cartpage");handleLoading()}}>
           <FaCartArrowDown/><p>Cart</p><p>({getTotal()})</p>
           </div>

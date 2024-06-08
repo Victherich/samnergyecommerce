@@ -105,11 +105,20 @@ import { useNavigate } from 'react-router-dom';
         <h1>DELIVERY INFORMATION</h1>
         <form className="delivery-form" onSubmit={handleSubmit}>
           <label>
-            Full Name:
+            First Name:
             <input 
               type="text" 
-              value={form.fullName} 
-              onChange={(e) => handleChange('fullName', e.target.value)} 
+              value={form.firstName} 
+              onChange={(e) => handleChange('firstName', e.target.value)} 
+              required
+            />
+          </label>
+          <label>
+            Last Name:
+            <input 
+              type="text" 
+              value={form.lastName} 
+              onChange={(e) => handleChange('lastName', e.target.value)} 
               required
             />
           </label>

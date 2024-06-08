@@ -9,7 +9,7 @@
     /* overflow-y: hidden; */
   }
   
-  h2 {
+  .cart h2 {
     text-align: center;
     margin: 20px;
     color: green;
@@ -93,7 +93,12 @@
     background-color: #45a049;
   }
   
- 
+ .BackToDashLink{
+    color: green;
+    position: absolute;
+    top: 150px;
+    left:-150px;
+ }
   
     .item-name, .item-price, .quantity-controls, .remove-button {
       margin: 0 10px;
@@ -109,6 +114,11 @@
       max-width: 100px;
     }
   
+    @media screen and (max-width:884px) {
+      .BackToDashLink{
+        left:-70px
+      }
+    }
 
     @media screen and (max-width:428px) {
         .cart{
