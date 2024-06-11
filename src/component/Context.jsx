@@ -28,6 +28,7 @@ export const Context = createContext()
 const ContextProvider = ({children}) => {
   // const navigate =useNavigate()
     const [loading,setLoading]=useState(false)
+    const [loading2,setLoading2]=useState(false)
     const [searchResult, setSearchResult]=useState([])
     const dispatch = useDispatch()
     const allData = [
@@ -138,7 +139,7 @@ const [searchInput,setSearchInput]=useState("")
 const [dashContent,setDashContent]=useState(0)
 const [userAllOrders,setUserAllOrders]=useState([])
   return (
-    <Context.Provider value={{loading,setLoading,searchInput,setSearchInput,searchResult, 
+    <Context.Provider value={{loading,setLoading,loading2,setLoading2,searchInput,setSearchInput,searchResult, 
     setSearchResult,
     handleSearch,navigateState,setNavigateState,productDetail,setProductDetail,Data,DataDetail,
     handleDataDetail,dashContent,setDashContent,userAllOrders,setUserAllOrders}}>
@@ -157,3 +158,4 @@ export default ContextProvider
 //node mailer pw
 //  dxik rokt ayod qkri
 //node server.js
+// router.get('/verify/:token', async (req, res) => {

@@ -7,7 +7,7 @@ const LoadingUI = () => {
     <div className='LoadingUiWrap'>
       <div className='LoadingUi'>
           {/* <img src={Logo} alt="Loading"/> */}
-          <h2>Hot Sales Ng</h2>
+          <h2>HotSalesNg</h2>
           <p>Please Wait...</p>
       </div>
       

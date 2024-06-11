@@ -6,7 +6,7 @@ import { FaCcMastercard, FaCcVisa, FaFacebook, FaInstagram, FaNetworkWired, FaTw
 const Footer = () => {
   const location = useLocation()
   return (
-    <footer className={location.pathname==="/userlogin"||location.pathname==="/usersignup"?"footerdisappear":"footer"}>
+    <footer className={location.pathname==="/userlogin"||location.pathname==="/usersignup"||location.pathname==="/forgotpassword"||location.pathname.includes("/resetpassword")||location.pathname.includes("/verify")?"footerdisappear":"footer"}>
       <div className="footer-container">
         
         <div className="footer-contact">
@@ -14,7 +14,7 @@ const Footer = () => {
      
           <FaWeibo/>
 
-          <h4>HOT SALES NG</h4>
+          <h4>HOTSALESNG</h4>
           <p>Email: samnergy@gmail.com</p>
           <p>Phone: +234 811 819 7054 </p>
         </div>
@@ -30,6 +30,7 @@ const Footer = () => {
           <Link to={"/healthcare"} className="footer-link">Health Care</Link>
           <Link to={"/blog"} className="footer-link">Blog / Drop Shipping</Link>
           <Link to={"/buyandsellfood"} className="footer-link">Buy and sell food</Link>
+          <Link to={"/contactus"} className="footer-link">Contact us</Link>
        
         </div>
         <div className="footer-payment">

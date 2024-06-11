@@ -26,15 +26,15 @@ const Hero = () => {
         </div>
         <div className='HeroLeft'>
         {HeroSwitch===0&&<div className='Hero1'>
-            <p>Hot Sales Ng</p>
+            <p>HotSalesNg</p>
             {/* <h2>Best Collections</h2> */}
         </div>}
         {HeroSwitch===1&&<div className='Hero2'>
-            <p>Hot Sales Ng</p>
+            <p>HotSalesNg</p>
             {/* <h2>Best Deals</h2> */}
         </div>}
         {HeroSwitch===2&&<div className='Hero3'>
-            <p>Hot Sales Ng</p>
+            <p>HotSalesNg</p>
             {/* <h2>Easy Shopping</h2> */}
         </div>}
         </div>

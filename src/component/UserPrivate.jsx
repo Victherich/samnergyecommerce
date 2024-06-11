@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
 
 const UserPrivate = () => {
-const userId = useSelector(state=>state.userId)
+const userToken = useSelector(state=>state.userToken)
 
   return (
     <div>
-      {userId?<Outlet/>:<Navigate to="/userlogin"/>}
+      {userToken?<Outlet/>:<Navigate to="/userlogin"/>}
 
       
     </div>

@@ -6,17 +6,18 @@ import { useLocation } from 'react-router-dom';
 import { Context } from './Context';
 import LoadingUI from './LoadingUI';
 import { useSelector } from 'react-redux';
+import LoadingUI2 from './LoadingUI2';
 
 const Header = () => {
   const cart = useSelector(state=>state.cart)
   const wishlist = useSelector(state=>state.wishlist)
-  const userId = useSelector(state=>state.userId)
+  const userToken = useSelector(state=>state.userToken)
   const navigate = useNavigate()
   const location = useLocation()
-  const {loading,setLoading,searchInput,setSearchInput,handleSearch,navigateState,setNavigateState}=useContext(Context)
+  const {loading,setLoading,searchInput,setSearchInput,handleSearch,navigateState,setNavigateState,loading2,setLoading2}=useContext(Context)
   const [mobileMenuSwitch,setMobileMenuSwitch]=useState(false)
   
-console.log(userId)
+console.log(userToken)
     //Ref for clickOutside functionality
 const menuRef = useRef()
 
@@ -73,10 +74,10 @@ const getTotal = () => {
 
 
   return (
-    <div className={location.pathname==="/userlogin"||location.pathname==="/usersignup"?"HeaderWrapDisappear":'HeaderWrap'}>
+    <div className={location.pathname==="/userlogin"||location.pathname==="/usersignup"||location.pathname==="/forgotpassword"||location.pathname.includes("/resetpassword")||location.pathname.includes("/verify")?"HeaderWrapDisappear":'HeaderWrap'}>
       <div className='HeaderUp'>
         <div className='HeaderUpLeft'>
-            <h2>HOT SALES NG</h2>
+            <h2>HOTSALESNG</h2>
         </div>
         <div className='HeaderUpMid'>
             <input type="text" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)} placeholder='Search for products, brands and categories'/>
@@ -89,7 +90,7 @@ const getTotal = () => {
         <div className='HeaderUpRight1' onClick={handleNavigate}>
           <FaHome style={{cursor:"pointer"}}/><p>Home</p>
           </div>
-          {userId?<div className='HeaderUpRight2' onClick={()=>{navigate("/userdashboard");handleLoading()}}>
+          {userToken?<div className='HeaderUpRight2' onClick={()=>{navigate("/userdashboard");handleLoading()}}>
           <FaUser/><p>Dashboard</p>
           </div>:
 
@@ -125,6 +126,7 @@ const getTotal = () => {
       </div>}
       
       {loading&&<LoadingUI/>}
+      {loading2&&<LoadingUI2/>}
     </div>
   )
 }

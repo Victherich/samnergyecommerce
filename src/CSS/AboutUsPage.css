@@ -1,0 +1,62 @@
+.about-us {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    padding-top: 150px;
+
+    
+}
+
+.section {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: green;
+}
+
+.section p, .section ul {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    text-align: center;
+}
+
+.section ul {
+    padding-left: 20px;
+    text-align: left;
+}
+
+.section ul li {
+    margin-bottom: 10px;
+}
+
+.section-image {
+    width: 50%;
+    height: 200px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+    .about-us{
+        padding-top: 50px;
+    }
+    .section h2 {
+        font-size: 20px;
+    }
+
+    .section p {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .section-image {
+        width: 100%;
+        height: 200px;
+    }
+}

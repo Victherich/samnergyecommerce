@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import '../CSS/OrderSummaryPage.css';
 import { Context } from './Context';
@@ -62,13 +62,17 @@ const OrderSummaryPage = () => {
     const dispatch = useDispatch()
   const user = useSelector((state) => state.DeliveryDetail);
   const cart = useSelector((state) => state.cart);
-  const {loading,setLoading,dashContent,setDashContent,userAllOrders,setUserAllOrders}=useContext(Context)
+  const {loading,setLoading,loading2,setLoading2,dashContent,setDashContent,userAllOrders,setUserAllOrders}=useContext(Context)
 
   const calculateTotal = () => {
     let total = cart.reduce((sum, item) => sum + item.price * 1000 * item.qty, 0);
     const deliveryFee = deliveryFees[user.state]?.[user.city] || 0;
     return total + deliveryFee;
   };
+
+  // useEffect(()=>{
+  //   setLoading2(false)
+  // },[])
 
 
   const handleLoading=()=>{
@@ -94,7 +98,8 @@ const OrderSummaryPage = () => {
   const deliveryCharge = new Intl.NumberFormat().format(deliveryFees[user.state]?.[user.city] || 0)
 
   const handleOrderNow2 = async (reference) => {
-    setLoading(true)
+    setLoading2(true)
+    
 
     const getCurrentDateTime = () => {
       const now = new Date();
@@ -126,7 +131,7 @@ const OrderSummaryPage = () => {
 
 console.log(orderSummary)
 try {
-  const response = await axios.post('http://localhost:3000/send-order-summary', {
+  const response = await axios.post('https://email-handler-stpe.onrender.com/send-order-summary', {
     buyerEmail: user.email,
     sellerEmail: 'digitalpremiumtech@gmail.com',
     orderSummary: JSON.stringify(orderSummary, null, 2)
@@ -145,14 +150,14 @@ try {
 } catch (error) {
   Swal.fire({ icon: "error", text: "An error occurred while sending the order summary." });
 }finally{
-        setLoading(false)
+        setLoading2(false)
     }
   };
 
 
   //handling payment on deliery order
   const handleOrderNow3 = async () => {
-    setLoading(true)
+    setLoading2(true)
     const loadingAlert = Swal.fire({
             title: "Loading",
             text: "Please wait...",
@@ -191,7 +196,7 @@ try {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/send-order-summary', {
+      const response = await axios.post('https://email-handler-stpe.onrender.com/send-order-summary', {
         buyerEmail: user.email,
         sellerEmail: 'digitalpremiumtech@gmail.com',
         orderSummary: JSON.stringify(orderSummary, null, 2)
@@ -210,28 +215,112 @@ try {
     } catch (error) {
       Swal.fire({ icon: "error", text: "An error occurred while sending the order summary." });
     } finally{
-        setLoading(false)
+        setLoading2(false)
         loadingAlert.close();
     }
   };
 
 
+//handling payment on deliery order
+// const handleOrderNow3 = async () => {
+//   setLoading(true)
+//   const loadingAlert = Swal.fire({
+//           title: "Loading",
+//           text: "Please wait...",
+//           allowOutsideClick: false,
+//           allowEscapeKey: false,
+//           showConfirmButton: false
+//         });
+      
+//         Swal.showLoading();
+
+//   const getCurrentDateTime = () => {
+//     const now = new Date();
+//     // Calculate the timezone offset in milliseconds
+//     const offset = now.getTimezoneOffset() * 60000;
+//     // Adjust the time to the local time
+//     const localTime = new Date(now.getTime() - offset);
+//     // Convert to a readable format
+//     return localTime.toISOString().slice(0, 19).replace("T", " ");
+//   };
+  
+
+//   const orderSummary = {
+//     date: getCurrentDateTime(),
+//     transactionRef:"Payment on delivery",
+//   orderRef:generateOrderRef(),
+//   deliveryCharge:deliveryCharge,
+//     firstName: user.firstName,
+//     lastName: user.lastName, 
+//     phone: user.phone,
+//     email: user.email,
+//     address: user.address,
+//     state: user.state,
+//     city: user.city,
+//     cartItems: cart.map((item) => `${item.title} - ${item.qty} x ₦${new Intl.NumberFormat().format(item.price * 1000)}`),
+//     total: `₦ ${new Intl.NumberFormat().format(calculateTotal())}`
+//   };
+
+  
+//   const requestBody = {
+//     ishtml: "false",
+//     sendto: `${orderSummary.email}, <victherich@gmail.com>`, // Include both buyer's and seller's email
+//     name: "Hot Sales Ng",
+//     replyTo: "<victherich@gmail.com>",
+//     title: "Order Details",
+//     body: `
+//       Date:${orderSummary.date}
+//       Transaction Reference :${orderSummary.transactionRef}
+//       Order Reference: ${orderSummary.orderRef}
+//       First Name: ${orderSummary.firstName}
+//       Last Name: ${orderSummary.lastName}
+//       Phone: ${orderSummary.phone}
+//       Email: ${orderSummary.email}
+//       Address: ${orderSummary.address}
+//       State: ${orderSummary.state}
+//       City: ${orderSummary.city}
+//       Cart Items:
+//       ${orderSummary.cartItems.join('\n')}
+//       Total: ${orderSummary.total}
+//     `
+//   };
+
+//   axios.post("https://rapidmail.p.rapidapi.com/", requestBody, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       "x-rapidapi-host": "rapidmail.p.rapidapi.com",
+//       "x-rapidapi-key": "e14cd989camsh6cfcd6ec78cc46bp1b206ajsnf88ed424afbc"
+//       // "x-rapidapi-key": "a148c5c47cmshb2e3f102fefc8a5p1c21bcjsn70935ecb599b"
+//     }
+//   })
+//   .then(response => {
+//     console.log("Email sent successfully:", response.data);
+//     Swal.fire({ icon: "success", text: "Order confirmed, Please check your email for details" });
+//         dispatch(handleUserAllOrder(orderSummary))
+//         dispatch(clearCart());
+//         navigate("/userdashboard")
+//         setDashContent(1)
+//         setLoading(false)
+//       loadingAlert.close();
+//   })
+//   .catch(error => {
+//     console.error("Error sending email:", error);
+//     Swal.fire({ icon: "error", text: "An error occurred while sending the order summary." });
+//     setLoading(false)
+//       loadingAlert.close();
+//   })
+  
+  
+  
+// };
 
 
 
 
 
-  // const handleOrderNow = ()=>{
-  //   if(isChecked){
-  //       handleLoading()
-  //       // handleOrderNow2()
-  //       alert("payment on delivery")
-        
-  //   }else{
-  //       handleLoading()
-  //       alert("pay now on paystack")
-  //   }
-  // }
+
+
+
 
   const handleOrderNow = () => {
     handleLoading();
@@ -255,7 +344,7 @@ try {
       onSuccess: (transaction) => {
         // handle successful payment
         // dispatch(clearCart());
-        Swal.fire({ icon: "success", text: "Payment successful!", showConfirmButton: true });
+        Swal.fire({ icon: "success", text: "Payment successful!", showConfirmButton: true,timer:2000 });
         // navigate("/userdashboard")
         // setDashContent(1)
         handleOrderNow2(transaction.reference)

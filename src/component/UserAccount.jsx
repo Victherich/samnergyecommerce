@@ -1,7 +1,10 @@
 import React from 'react';
 import '../CSS/UserAccount.css';
+import { useSelector } from 'react-redux';
 
 const UserAccount = () => {
+const userInfo = useSelector(state=>state.userInfo)
+
   // Sample user data
   const user = {
     firstName: 'John',
@@ -15,20 +18,20 @@ const UserAccount = () => {
       <h2>Account Information</h2>
       <div className="account-info">
         <div className="info-row">
-          <label>First Name:</label>
-          <span>{user.firstName}</span>
+          <label>Full Name:</label>
+          <span>{userInfo.fullName}</span>
         </div>
-        <div className="info-row">
+        {/* <div className="info-row">
           <label>Last Name:</label>
           <span>{user.lastName}</span>
-        </div>
+        </div> */}
         <div className="info-row">
           <label>Email:</label>
-          <span>{user.email}</span>
+          <span>{userInfo.email}</span>
         </div>
         <div className="info-row">
           <label>Phone Number:</label>
-          <span>{user.phoneNumber}</span>
+          <span>{userInfo.phoneNumber}</span>
         </div>
       </div>
     </div>

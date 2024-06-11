@@ -63,7 +63,7 @@ useEffect(()=>{
         setLoading(true)
   
         try {
-          const response =  axios.post("  ", formData);
+          const response = await axios.post("https://hotsalesngonboarding.onrender.com/api/auth/login", formData);
           console.log(response.data);
 
           setLoading(false)
@@ -75,12 +75,12 @@ useEffect(()=>{
             timer:2000
           })
           
-          const userId = true
-          const userInfo = true
+          // const userId = true
+          // const userInfo = true
         //   const userId = response.data.checkUser._id
-        //   const userInfo = response.data.checkUser
-        //   const userToken = response.data.token
-          dispatch(userLogin({userInfo,userId}))
+          const userInfo = response.data.user
+          const userToken = response.data.token
+          dispatch(userLogin({userInfo,userToken}))
           navigate("/userdashboard")
   
         } catch (error) {
@@ -150,9 +150,12 @@ useEffect(()=>{
                   value={formData.password}
                   onChange={handleChange}
                   placeholder='Enter password' required />
-                  {passwordShow==="text"?<FaEye onClick={()=>setPasswordShow("password")} style={{color:"rgba(0, 128, 0, 0.541)",fontSize:"1.5rem",cursor:"pointer",position:"absolute",top:"50%",right:"10px"}}/>:
-                  <FaEyeSlash onClick={()=>setPasswordShow("text")} style={{color:"rgba(0, 128, 0, 0.541)",fontSize:"1.5rem",cursor:"pointer",position:"absolute",top:"50%",right:"10px"}}/>}
+                  {passwordShow==="text"?<FaEye onClick={()=>setPasswordShow("password")} style={{color:"rgba(0, 128, 0, 0.541)",fontSize:"1.5rem",cursor:"pointer",position:"absolute",top:"38%",right:"10px"}}/>:
+                 
+                 <FaEyeSlash onClick={()=>setPasswordShow("text")} style={{color:"rgba(0, 128, 0, 0.541)",fontSize:"1.5rem",cursor:"pointer",position:"absolute",top:"38%",right:"10px"}}/>}
+                 <Link to="/forgotpassword" style={{color:"green",cursor:"pointer",textDecoration:"none"}}>Forgot Password?</Link>
               </div>
+
               <button className='AgentSignUpNextButton'>Login</button>
               <p className='myspan'>Don't have an account?  
               <Link to={"/usersignup"} className='AgentFormPage1Link'> Sign Up</Link></p>

@@ -104,7 +104,7 @@ const validateForm = () => {
       setLoading(true)
 
       try {
-        const response = await axios.post("   ", formData);
+        const response = await axios.post('https://hotsalesngonboarding.onrender.com/api/auth/signup', formData);
         console.log(response.data);
       
         setLoading(false)
@@ -114,17 +114,17 @@ const validateForm = () => {
           showConfirmButton:true,
           timer:2000, 
         })
-        const user = response.data.user
-        const id = response.data.user._id
+        // const user = response.data.user
+        // const id = response.data.user._id
         // dispatch(userLogin({user,id}))
-        navigate("/userlogin")
-
+        // navigate("/userlogin")
+        navigate("/emailredirectpage")
       } catch (error) {
         console.error(error);
      
         setLoading(false)
         Swal.fire({
-          icon:"error",title:error.message,text:error.response.data,showConfirmButton:false,timer:2000
+          icon:"error",title:"something went wrong",showConfirmButton:false,timer:2000
         })
       }
     } 

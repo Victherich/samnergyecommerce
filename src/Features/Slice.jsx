@@ -21,7 +21,7 @@ const MySlice = createSlice({
     },
 
   userInfo:null,
-  userId:null,
+  userToken:null,
   userAllOrder:[],
 
   },
@@ -73,12 +73,12 @@ const MySlice = createSlice({
     },
     userLogin: (state, { payload }) => {
       state.userInfo = payload.userInfo;
-      state.userId = payload.userId;
+      state.userToken = payload.userToken;
       
   },
   userLogout:(state)=>{
     state.userInfo = null;
-    state.userId = null;
+    state.userToken = null;
   },
 
   handleUserAllOrder:(state,{payload})=>{

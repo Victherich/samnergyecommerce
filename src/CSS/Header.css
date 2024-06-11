@@ -165,8 +165,17 @@
 }
 
 @media screen and (max-width:884px) {
+    .HeaderWrap{
+        position: static;
+        /* position: relative; */
+    }
+    .HeaderUp{
+        flex-direction: column;
+        gap: 7px;
+        
+    }
     .HeaderUpMid{
-        width: 280px;
+        /* width: 280px; */
     }   
     .HeaderDown{
         height: auto;
@@ -211,7 +220,7 @@
         width: 100%;
     }
     .HeaderWrap{
-        position:fixed;
+        /* position:fixed; */
     }
     .MenuActive{
         background-color: rgba(172, 255, 47, 0.363);

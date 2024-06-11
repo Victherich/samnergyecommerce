@@ -23,6 +23,12 @@ import UserLogin from './component/UserLogin';
 import UserPrivate from './component/UserPrivate';
 import DelieryDetailPrivate from './component/DelieryDetailPrivate';
 import OrderSummaryPrivate from './component/OrderSummaryPrivate';
+import EmailRedirectPage from './component/EmailRedirectPage';
+import VerifyEmail from './component/VerifyEmail';
+import AboutUsPage from './component/AboutUsPage';
+import ContactUs from './component/ContactUs';
+import ForgotPasswordPage from './component/ForgotPasswordPage';
+import ResetPasswordPage from './component/ResetPasswordPage';
 
 
 const App = () => {
@@ -57,7 +63,13 @@ const App = () => {
           <Route element={<OrderSummaryPrivate/>}>
           <Route path="/ordersummarypage" element={<OrderSummaryPage/>}/>
           </Route>
-          
+
+          <Route path="/emailredirectpage" element={<EmailRedirectPage/>}/>
+          <Route path="/verify/:token" element={<VerifyEmail/>} />
+          <Route path="/aboutus" element={<AboutUsPage/>}/>
+          <Route path="/contactus" element={<ContactUs/>}/>
+          <Route path= "/forgotpassword" element={<ForgotPasswordPage/>}/>
+          <Route path="/resetpassword/:token" element={<ResetPasswordPage/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>

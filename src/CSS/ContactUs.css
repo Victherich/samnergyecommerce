@@ -1,0 +1,157 @@
+.contact-us-wrap {
+    padding-top: 100px;
+    font-family: Arial, sans-serif;
+}
+
+.contact-us {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.contact-us-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.contact-us-header h1 {
+    font-size: 32px;
+    color: green;
+}
+
+.contact-us-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.contact-us-body-left {
+    flex: 1;
+    min-width: 300px;
+    margin-right: 20px;
+}
+
+.FormLabel{
+    display: flex;
+    flex-direction: column;
+    margin-bottom:20px;
+}
+
+.contact-us-body-right {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+}
+
+.contact-us-body-right img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.input-label-child {
+    /* margin-bottom: 20px; */
+}
+
+.input-label-child p {
+    margin: 0 0 5px;
+    font-weight: bold;
+    color: green;
+}
+
+.input-label-child input, .input-label-child textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.input-label-child textarea {
+    height: 100px;
+    resize: none;
+}
+
+.error-text {
+    color: red;
+    font-size: small;
+    font-style: italic;
+    /* margin-bottom: 20px; */
+}
+
+.submit-button-wrap {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.submit-button-wrap button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-button-wrap button:disabled {
+    background-color: #ccc;
+}
+
+.form-submit-ui-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.form-submit-ui {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-submit-ui img {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.form-submit-ui p {
+    margin-bottom: 20px;
+}
+
+.form-submit-ui button {
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.back-button-wrap {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-button-wrap button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .contact-us-body {
+        flex-direction: column;
+    }
+
+    .contact-us-body-left, .contact-us-body-right {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
