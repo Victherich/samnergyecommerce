@@ -1,16 +1,18 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext,useEffect } from 'react';
 import '../CSS/WishList.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromWishlist,addToCart } from '../Features/Slice';
 import Swal from 'sweetalert2'
 import { Context } from './Context';
+import axios from 'axios';
 
 
 
 const WishList = () => {
-  const {DataDetail}=useContext(Context)
+  const {DataDetail,wishListGetUrl}=useContext(Context)
   const dispatch=useDispatch()
 const wishlist = useSelector(state=>state.wishlist)
+const userInfo = useSelector(state=>state.userInfo)
 
 
   const handleRemoveItem = (id) => {
@@ -23,6 +25,46 @@ const wishlist = useSelector(state=>state.wishlist)
     dispatch(addToCart(DataDetail))
     Swal.fire({icon:"success",text:"Item added to cart",showConfirmButton:false,timer:2000})
   }
+
+
+  const [wishlist2,setWishList2]=useState([])
+
+  const fetchWishList = async () => {
+    const loadingAlert = Swal.fire({
+      // title: "fethcing your orders",
+      text: "fetching your orders",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false
+    });
+  
+    Swal.showLoading();
+
+    try {
+      const response = await axios.get(`${wishListGetUrl}/${userInfo.userId}`);
+      console.log('Wishlist fetched:', response.data);
+      setWishList2(response.data);
+      
+      
+    } catch (error) {
+      console.error('Error fetching wishlist:', error);
+      Swal.fire({
+        icon: "error",
+        title: "Fetch wishlist Failed",
+        text: error.response.data.error || 'An error occurred.',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }finally{
+      loadingAlert.close();
+    }
+  };
+  
+
+useEffect(()=>{
+  fetchWishList()
+},[])
+
 
   return (
     <div className="wishlist">

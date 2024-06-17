@@ -14,7 +14,7 @@ import { FaHome } from 'react-icons/fa';
 const UserLogin = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {loading,setLoading}=useContext(Context)
+  const {loading,setLoading,loginUrl}=useContext(Context)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,8 +25,19 @@ const UserLogin = () => {
 
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === 'email') {
+      setFormData({ 
+        ...formData, 
+        [e.target.name]: e.target.value.toLowerCase().trim() 
+      });
+    } else {
+      setFormData({ 
+        ...formData, 
+        [e.target.name]: e.target.value 
+      });
+    }
   };
+  
 
 
 //form Validation
@@ -63,7 +74,7 @@ useEffect(()=>{
         setLoading(true)
   
         try {
-          const response = await axios.post("https://hotsalesngonboarding.onrender.com/api/auth/login", formData);
+          const response = await axios.post(`${loginUrl}`, formData);
           console.log(response.data);
 
           setLoading(false)
@@ -86,7 +97,32 @@ useEffect(()=>{
         } catch (error) {
           console.error(error);
           setLoading(false)
-          Swal.fire({icon:"error",text:error.response.data,showConfirmButton:false,timer:2000})
+          let errorMessage = "An error occurred. Please try again.";
+          if (error.response) {
+            // Errors from the server
+            if (error.response.data && error.response.data.error) {
+              errorMessage = error.response.data.error;
+            } else if (typeof error.response.data === 'string') {
+              errorMessage = error.response.data;
+            } else {
+              errorMessage = "Unexpected error from server.";
+            }
+          } else if (error.request) {
+            // No response received
+            errorMessage = "No response from server. Please check your internet connection.";
+          } else {
+            // Other errors
+            errorMessage = error.message;
+          }
+    
+          Swal.fire({
+            icon: "error",
+            title: "Login Failed",
+            text: errorMessage,
+            showConfirmButton: false,
+            timer: 3000
+          });
+          
         }
       }
     

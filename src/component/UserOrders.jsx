@@ -1,14 +1,55 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect,useState } from 'react';
 import '../CSS/UserOrders.css';
 import { Context } from './Context';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import Swal from 'sweetalert2'
+import { handleUserAllOrder2 } from '../Features/Slice';
 
 const UserOrders = () => {
   // Sample order data
   const dispatch = useDispatch()
   const userAllOrder = useSelector(state=>state.userAllOrder)
 
+  const {setOrderedList,orderedList,orderListGetUrl}=useContext(Context)
+  const userInfo = useSelector(state=>state.userInfo)
 
+
+  const fetchOrders = async () => {
+    const loadingAlert = Swal.fire({
+      // title: "fethcing your orders",
+      text: "fetching your orders",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false
+    });
+  
+    Swal.showLoading();
+
+    try {
+      const response = await axios.get(`${orderListGetUrl}/${userInfo.userId}`);
+      console.log('Orders fetched:', response.data);
+      setOrderedList(response.data);
+      
+      dispatch(handleUserAllOrder2(orderedList))
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      Swal.fire({
+        icon: "error",
+        title: "Fetch Orders Failed",
+        text: error.response.data.error || 'An error occurred.',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }finally{
+      loadingAlert.close();
+    }
+  };
+  
+
+useEffect(()=>{
+  fetchOrders()
+},[])
 
   // const orders = [
   //   {
@@ -39,13 +80,18 @@ const UserOrders = () => {
   //       'Product 3 - 1 x ₦20,000',
   //     ],
   //     total: '₦ 20,000',
-  //   },
+
   // ];
+
+  const [reversedArray,setReversedArray]=useState([])
+  useEffect(()=>{
+    setReversedArray([...orderedList].reverse());
+  },[orderedList])
 
   return (
     <div className="orders-container">
       <h2>My Orders</h2>
-      {userAllOrder.map((order) => (
+      {reversedArray?.map((order) => (
         <div key={order.orderRef} className="order">
           <div className="order-header">
           <span><strong>Transaction Reference:</strong> {order.transactionRef}</span>
@@ -66,7 +112,7 @@ const UserOrders = () => {
             <div className="cart-items">
               <strong>Items:</strong>
               <ul>
-                {order.cartItems.map((item, index) => (
+                {order?.cartItems?.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>

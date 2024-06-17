@@ -13,7 +13,7 @@ import { FaHome } from 'react-icons/fa';
 const UserSignUp = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {loading,setLoading}=useContext(Context)
+  const {loading,setLoading,signupUrl}=useContext(Context)
   const [isChecked, setIsChecked] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -23,9 +23,24 @@ const UserSignUp = () => {
     confirmPassword: "",
   });
 
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === 'email') {
+      setFormData({ 
+        ...formData, 
+        [e.target.name]: e.target.value.toLowerCase().trim() 
+      });
+    } else {
+      setFormData({ 
+        ...formData, 
+        [e.target.name]: e.target.value 
+      });
+    }
   };
+  
 
   const [fullNameError, setFullNameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -104,7 +119,7 @@ const validateForm = () => {
       setLoading(true)
 
       try {
-        const response = await axios.post('https://hotsalesngonboarding.onrender.com/api/auth/signup', formData);
+        const response = await axios.post(`${signupUrl}`, formData);
         console.log(response.data);
       
         setLoading(false)
@@ -121,11 +136,37 @@ const validateForm = () => {
         navigate("/emailredirectpage")
       } catch (error) {
         console.error(error);
-     
         setLoading(false)
-        Swal.fire({
-          icon:"error",title:"something went wrong",showConfirmButton:false,timer:2000
-        })
+
+        // Handle different types of errors
+      let errorMessage = "An error occurred. Please try again.";
+      if (error.response) {
+        // Errors from the server
+        if (error.response.data && error.response.data.error) {
+          errorMessage = error.response.data.error;
+        } else if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else {
+          errorMessage = "Unexpected error from server.";
+        }
+      } else if (error.request) {
+        // No response received
+        errorMessage = "No response from server. Please check your internet connection.";
+      } else {
+        // Other errors
+        errorMessage = error.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Sign Up Failed",
+        text: errorMessage,
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+
+      
       }
     } 
     

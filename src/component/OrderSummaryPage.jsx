@@ -60,9 +60,14 @@ const deliveryFees = {
 const OrderSummaryPage = () => {
   const navigate = useNavigate()
     const dispatch = useDispatch()
+    const userInfo = useSelector(state=>state.userInfo)
   const user = useSelector((state) => state.DeliveryDetail);
   const cart = useSelector((state) => state.cart);
-  const {loading,setLoading,loading2,setLoading2,dashContent,setDashContent,userAllOrders,setUserAllOrders}=useContext(Context)
+  const {loading,setLoading,loading2,setLoading2,dashContent,setDashContent,userAllOrders,setUserAllOrders,
+    orderedList,setOrderedList,orderListPostUrl
+  }=useContext(Context)
+
+  console.log(userInfo)
 
   const calculateTotal = () => {
     let total = cart.reduce((sum, item) => sum + item.price * 1000 * item.qty, 0);
@@ -70,9 +75,35 @@ const OrderSummaryPage = () => {
     return total + deliveryFee;
   };
 
-  // useEffect(()=>{
-  //   setLoading2(false)
-  // },[])
+  
+
+  const handleOrderedListPost = async(orderSummary)=>{
+    
+    try {
+      const response = await axios.post(`${orderListPostUrl}`, orderSummary);
+      console.log('Order saved:', response.data);
+      Swal.fire({
+        icon: "success",
+        title: "Order Placed",
+        text: response.data.message,
+        showConfirmButton: false,
+        timer: 2000
+      });
+
+      navigate("/userdashboard")
+        setDashContent(1)
+        dispatch(clearCart());
+    } catch (error) {
+      console.error('Error saving order:', error);
+      Swal.fire({
+        icon: "error",
+        title: "Order Failed",
+        text: error.response.data.error || 'An error occurred. Please try again.',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
+  }
 
 
   const handleLoading=()=>{
@@ -112,8 +143,9 @@ const OrderSummaryPage = () => {
     };
     
     const orderSummary = {
+      userId:userInfo.userId,
       date:getCurrentDateTime(),
-      deliveryCharge:deliveryCharge,
+      deliveryCharge: Number(deliveryCharge.replace(/,/g, '')),
       transactionRef:reference,
     orderRef:generateOrderRef(),
       firstName: user.firstName,
@@ -130,6 +162,7 @@ const OrderSummaryPage = () => {
 // setUserAllOrders([...userAllOrders,{orderSummary}])
 
 console.log(orderSummary)
+handleOrderedListPost(orderSummary);
 try {
   const response = await axios.post('https://email-handler-stpe.onrender.com/send-order-summary', {
     buyerEmail: user.email,
@@ -140,14 +173,18 @@ try {
 
   if (response.status === 200) {
     Swal.fire({ icon: "success", text: "Order confirmed, Please check your email for details" });
-    dispatch(handleUserAllOrder(orderSummary))
+    // dispatch(handleUserAllOrder(orderSummary))
+    
     dispatch(clearCart());
     navigate("/userdashboard")
     setDashContent(1)
+    // setOrderedList([...orderedList,{...orderSummary}]) 
+    
   } else {
     Swal.fire({ icon: "error", text: "Failed to send order summary." });
   }
 } catch (error) {
+  console.error(error)
   Swal.fire({ icon: "error", text: "An error occurred while sending the order summary." });
 }finally{
         setLoading2(false)
@@ -180,10 +217,11 @@ try {
     
 
     const orderSummary = {
+      userId:userInfo.userId,
       date: getCurrentDateTime(),
       transactionRef:"Payment on delivery",
     orderRef:generateOrderRef(),
-    deliveryCharge:deliveryCharge,
+    deliveryCharge: Number(deliveryCharge.replace(/,/g, '')),
       firstName: user.firstName,
       lastName: user.lastName, 
       phone: user.phone,
@@ -195,6 +233,8 @@ try {
       total: `₦ ${new Intl.NumberFormat().format(calculateTotal())}`
     };
 
+    handleOrderedListPost(orderSummary)
+
     try {
       const response = await axios.post('https://email-handler-stpe.onrender.com/send-order-summary', {
         buyerEmail: user.email,
@@ -205,14 +245,18 @@ try {
 
       if (response.status === 200) {
         Swal.fire({ icon: "success", text: "Order confirmed, Please check your email for details" });
-        dispatch(handleUserAllOrder(orderSummary))
+        // dispatch(handleUserAllOrder(orderSummary))
+        
         dispatch(clearCart());
         navigate("/userdashboard")
         setDashContent(1)
+        // setOrderedList([...orderedList,{...orderSummary}]) 
+        
       } else {
         Swal.fire({ icon: "error", text: "Failed to send order summary." });
       }
     } catch (error) {
+      console.error(error)
       Swal.fire({ icon: "error", text: "An error occurred while sending the order summary." });
     } finally{
         setLoading2(false)

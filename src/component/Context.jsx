@@ -138,11 +138,40 @@ const [searchInput,setSearchInput]=useState("")
   
 const [dashContent,setDashContent]=useState(0)
 const [userAllOrders,setUserAllOrders]=useState([])
+
+//local urls
+const signupUrl="http://localhost:5000/api/auth/signup"
+const loginUrl = "http://localhost:5000/api/auth/login"
+const emailVeifyUrl = "http://localhost:5000/api/auth/verify"
+const forgotPasswordUrl="http://localhost:5000/api/auth/forgot-password"
+const resetPasswordUrl= "http://localhost:5000/api/auth/reset-password"
+const orderListPostUrl= "http://localhost:5000/api/order"
+const orderListGetUrl="http://localhost:5000/api/orders"
+const wishListGetUrl= ""
+const wishListAddUrl='http://localhost:5000/api/wishlist/add'
+
+
+//remote urls
+// const signupUrl="https://hotsalesngonboarding.onrender.com/api/auth/signup"
+// const loginUrl = "https://hotsalesngonboarding.onrender.com/api/auth/login"
+// const emailVeifyUrl = "https://hotsalesngonboarding.onrender.com/api/auth/verify"
+// const forgotPasswordUrl="https://hotsalesngonboarding.onrender.com/api/auth/forgot-password"
+// const resetPasswordUrl= "https://hotsalesngonboarding.onrender.com/api/auth/reset-password"
+// const orderListPostUrl= "https://hotsalesngonboarding.onrender.com/api/order"
+// const orderListGetUrl="https://hotsalesngonboarding.onrender.com/api/orders"
+// const wishListGetUrl= ""
+// const wishListAddUrl='https://hotsalesngonboarding.onrender.com/api/wishlist/add'
+
+const [orderedList,setOrderedList]=useState([])
+
+
   return (
     <Context.Provider value={{loading,setLoading,loading2,setLoading2,searchInput,setSearchInput,searchResult, 
     setSearchResult,
     handleSearch,navigateState,setNavigateState,productDetail,setProductDetail,Data,DataDetail,
-    handleDataDetail,dashContent,setDashContent,userAllOrders,setUserAllOrders}}>
+    handleDataDetail,dashContent,setDashContent,userAllOrders,setUserAllOrders,
+    signupUrl,loginUrl,emailVeifyUrl,forgotPasswordUrl,resetPasswordUrl,
+    orderedList,setOrderedList,orderListPostUrl,orderListGetUrl,wishListGetUrl,wishListAddUrl}}>
       {children}
     </Context.Provider>
   )

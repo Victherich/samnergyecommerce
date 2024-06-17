@@ -14,7 +14,8 @@ const UserDashboard = () => {
     const navigate = useNavigate()
     const wishlist = useSelector(state=>state.wishlist)
     const cart = useSelector(state=>state.cart)
-    const {loading,setLoading,dashContent,setDashContent,userAllOrders,setUserAllOrders}=useContext(Context)
+    const {loading,setLoading,dashContent,setDashContent,userAllOrders,setUserAllOrders,orderedList}=useContext(Context)
+    const userAllOrder = useSelector(state=>state.userAllOrder)
 
     const handleLoading=()=>{
  
@@ -39,7 +40,7 @@ const UserDashboard = () => {
         <nav>
           <ul>
             <li onClick={()=>setDashContent(0)}><p>Account</p></li>
-            <li onClick={()=>setDashContent(1)}><p>Orders</p></li>
+            <li onClick={()=>setDashContent(1)}><p>Orders ({orderedList.length})</p></li>
             <li onClick={()=>setDashContent(2)}><p>Wishlist ({wishlist.length})</p></li>
           
             {/* <li><p>Wishlist</p></li> */}

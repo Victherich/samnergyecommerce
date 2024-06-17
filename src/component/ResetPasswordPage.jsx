@@ -11,7 +11,7 @@ import BackButton from './BackButton';
 const ResetPasswordPage = () => {
   const { token } = useParams()
   const navigate = useNavigate()
-  const {loading,setLoading} = useContext(Context)
+  const {loading,setLoading,resetPasswordUrl} = useContext(Context)
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: ""
@@ -22,6 +22,8 @@ const ResetPasswordPage = () => {
   const [passwordShow, setPasswordShow] = useState("password")
   const [confirmPasswordShow, setConfirmPasswordShow] = useState("password")
   const [resetPageSwitch,setResetPageSwitch]=useState(false)
+
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -58,7 +60,7 @@ const ResetPasswordPage = () => {
     if (validateForm()) {
       setLoading(true)
       try {
-        const response = await axios.post(`https://hotsalesngonboarding.onrender.com/api/auth/reset-password/${token}`, { password: formData.password });
+        const response = await axios.post(`${resetPasswordUrl}/${token}`, { password: formData.password });
         setLoading(false)
         // Swal.fire({
         //   icon: "success",
@@ -69,12 +71,33 @@ const ResetPasswordPage = () => {
         setResetPageSwitch(true)
       } catch (error) {
         setLoading(false)
-        Swal.fire({
-          icon: "error",
-          text: error.response.data.error,
-          showConfirmButton: false,
-          timer: 2000
-        });
+        // Handle different types of errors
+    let errorMessage = "An error occurred. Please try again.";
+    if (error.response) {
+      // Errors from the server
+      if (error.response.data && error.response.data.error) {
+        errorMessage = error.response.data.error;
+      } else if (typeof error.response.data === 'string') {
+        errorMessage = error.response.data;
+      } else {
+        errorMessage = "Unexpected error from server.";
+      }
+    } else if (error.request) {
+      // No response received
+      errorMessage = "No response from server. Please check your internet connection.";
+    } else {
+      // Other errors
+      errorMessage = error.message;
+    }
+
+    Swal.fire({
+      icon: "error",
+      title: "Password Reset Failed",
+      text: errorMessage,
+      showConfirmButton: false,
+      timer: 3000
+    });
+        
       }
     }
   };

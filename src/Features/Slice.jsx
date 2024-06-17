@@ -84,9 +84,13 @@ const MySlice = createSlice({
   handleUserAllOrder:(state,{payload})=>{
     state.userAllOrder = [{...payload},...state.userAllOrder]
   }
+,
+  handleUserAllOrder2:(state,payload)=>{
+    state.userAllOrder = payload;
+  }
   }
 });
 
 export const { addToCart, removeFromCart, updateQuantity,addToWishlist,
-  removeFromWishlist,productDetailAssign,updateField,clearCart,userLogin,userLogout,handleUserAllOrder } = MySlice.actions;
+  removeFromWishlist,productDetailAssign,updateField,clearCart,userLogin,userLogout,handleUserAllOrder,handleUserAllOrder2 } = MySlice.actions;
 export default MySlice.reducer;

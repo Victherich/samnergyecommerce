@@ -12,16 +12,26 @@ import BackButton from './BackButton';
 const ForgotPasswordPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {loading,setLoading} = useContext(Context)
+  const {loading,setLoading,forgotPasswordUrl} = useContext(Context)
   const [formData, setFormData] = useState({ email: "" });
   const [emailError, setEmailError] = useState("")
   const [firstClick, setFirstClick] = useState(false)
 const [resendLinkSwitch,setResendLinkSwitch]=useState(false)
 
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const handleChange = (e) => {
+  if (e.target.name === 'email') {
+    setFormData({ 
+      ...formData, 
+      [e.target.name]: e.target.value.toLowerCase().trim() 
+    });
+  } else {
+    setFormData({ 
+      ...formData, 
+      [e.target.name]: e.target.value 
+    });
+  }
+};
 
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,7 +57,7 @@ const [resendLinkSwitch,setResendLinkSwitch]=useState(false)
     if (validateForm()) {
       setLoading(true)
       try {
-        const response = await axios.post("https://hotsalesngonboarding.onrender.com/api/auth/forgot-password", formData);
+        const response = await axios.post(`${forgotPasswordUrl}`, formData);
         console.log(response.data)
         setLoading(false)
         // Swal.fire({
@@ -62,12 +72,33 @@ const [resendLinkSwitch,setResendLinkSwitch]=useState(false)
       } catch (error) {
         console.error(error)
         setLoading(false)
-        Swal.fire({
-          icon: "error",
-          text: error.response.data.error,
-          showConfirmButton: false,
-          timer: 2000
-        });
+         // Handle different types of errors
+    let errorMessage = "An error occurred. Please try again.";
+    if (error.response) {
+      // Errors from the server
+      if (error.response.data && error.response.data.error) {
+        errorMessage = error.response.data.error;
+      } else if (typeof error.response.data === 'string') {
+        errorMessage = error.response.data;
+      } else {
+        errorMessage = "Unexpected error from server.";
+      }
+    } else if (error.request) {
+      // No response received
+      errorMessage = "No response from server. Please check your internet connection.";
+    } else {
+      // Other errors
+      errorMessage = error.message;
+    }
+
+    Swal.fire({
+      icon: "error",
+      title: "Forgot Password Failed",
+      text: errorMessage,
+      showConfirmButton: false,
+      timer: 3000
+    });
+        
       }
     }
   };

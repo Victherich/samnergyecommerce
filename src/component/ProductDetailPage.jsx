@@ -12,10 +12,12 @@ import p5 from "../Images/p3 (1).jpeg"
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart ,addToWishlist} from '../Features/Slice';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const ProductDetailPage = () => {
+  const userToken = useSelector(state=>state.userToken)
   const dispatch = useDispatch()
-  const {loading,setLoading}=useContext(Context)
+  const {loading,setLoading,wishListAddUrl}=useContext(Context)
 
     const {DataDetail}=useContext(Context)
     const ProductDetail=useSelector(state=>state.ProductDetail)
@@ -50,11 +52,54 @@ const ProductDetailPage = () => {
     Swal.fire({icon:"success",text:"Item added to cart",showConfirmButton:false,timer:2000})
   }
 
-  const handleAddToWishlist = ()=>{
+  const handleAddToWishlist = (e)=>{
     // handleLoading()
-    dispatch(addToWishlist(DataDetail))
-    Swal.fire({icon:"success",text:"Item added to wishlist",showConfirmButton:false,timer:2000})
+    if(userToken)
+      {
+        handleAddToWishlist2(e)
+        dispatch(addToWishlist(DataDetail))
+    Swal.fire({icon:"success",text:"Item added to wishlist",showConfirmButton:false,timer:2000})}
+    else{
+      Swal.fire({icon:"warning",text:"Please login to add to wishlist",timer:2000,showConfirmButton:false})
+    }
   }
+
+
+
+  const handleAddToWishlist2 = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      // const token = localStorage.getItem('token'); // Assuming you store token in localStorage
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`
+        }
+      };
+      const response = await axios.post(`${wishListAddUrl}`, DataDetail, config);
+      console.log(response.data);
+      setLoading(false);
+      Swal.fire({
+        icon: 'success',
+        title: 'Item added to wishlist',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } catch (error) {
+      console.error('Error adding item to wishlist:', error);
+      setLoading(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+    }
+  };
+
+
+
 
   return (
     <div className='ProductDetailWrap'>
@@ -79,7 +124,7 @@ const ProductDetailPage = () => {
         <span>{ProductDetail.description}</span>
         <p className="amount">₦ {new Intl.NumberFormat().format(ProductDetail.price * 1000)}</p>
         <button className="buy-now" onClick={handleAddToCart}>Add to Cart</button>
-        <button className="buy-now" onClick={handleAddToWishlist} style={{backgroundColor:"white",
+        <button className="buy-now" onClick={handleAddToWishlist2} style={{backgroundColor:"white",
         color:"green",
         border:"1px solid green",
         display:"flex",

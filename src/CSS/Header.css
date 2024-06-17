@@ -166,8 +166,8 @@
 
 @media screen and (max-width:884px) {
     .HeaderWrap{
-        position: static;
-        /* position: relative; */
+        /* position: static; */
+        position: relative;
     }
     .HeaderUp{
         flex-direction: column;
@@ -213,6 +213,7 @@
         background-color: green;
         position: absolute;
         top: 130px;
+        z-index: 999;
 
     }
     .Menu, .MenuActive{
